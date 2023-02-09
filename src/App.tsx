@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DashLayout from './scenes/DashLayout';
 import Layout from './scenes/Layout';
-import Login from './scenes/Login';
+import Login from './features/auth/Login';
 import Public from './scenes/Public';
+import Welcome from './features/auth/Welcome';
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Public />} />
           <Route path="login" element={<Login />} />
-          <Route path="dash" element={<DashLayout />}></Route>
+          <Route path="dash" element={<DashLayout />}>
+            <Route index element={<Welcome />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
