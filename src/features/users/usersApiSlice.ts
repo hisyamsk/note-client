@@ -7,7 +7,7 @@ import { apiSlice } from '../../app/api/apiSlice';
 import { RootState } from '../../app/store';
 import { IUsersResponse } from '../../interface/response.interface';
 
-const usersAdapter = createEntityAdapter<IUsersResponse>({});
+const usersAdapter = createEntityAdapter<IUsersResponse>();
 
 const initialState = usersAdapter.getInitialState();
 
@@ -56,7 +56,7 @@ const selectUsersResponseData = createSelector(
 
 export const {
   selectAll: selectAllUsers,
-  selectById: selectByUserId,
+  selectById: selectUserById,
   selectIds: selectUserIds,
 } = usersAdapter.getSelectors<RootState>(
   (state) => selectUsersResponseData(state) ?? initialState
