@@ -21,3 +21,8 @@ export interface INotesResponse {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IDocumentDeleted {
+  acknowledged: boolean;
+  deletedCount: number;
+}

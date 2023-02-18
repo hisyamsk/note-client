@@ -5,7 +5,15 @@ import {
 } from '@reduxjs/toolkit';
 import { apiSlice } from '../../app/api/apiSlice';
 import { RootState } from '../../app/store';
-import { IUsersResponse } from '../../interface/response.interface';
+import {
+  IUserCreate,
+  IUserUpdate,
+  IUserDelete,
+} from '../../interface/request.interface';
+import {
+  IDocumentDeleted,
+  IUsersResponse,
+} from '../../interface/response.interface';
 
 const usersAdapter = createEntityAdapter<IUsersResponse>();
 
@@ -40,10 +48,39 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         return [{ type: 'Users', id: 'LIST' }];
       },
     }),
+    addNewUser: builder.mutation<IUsersResponse, IUserCreate>({
+      query: (arg) => ({
+        url: '/notes',
+        method: 'POST',
+        body: { ...arg },
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'List' }],
+    }),
+    updateUser: builder.mutation<IUsersResponse, IUserUpdate>({
+      query: (arg) => ({
+        url: '/notes',
+        method: 'PATCH',
+        body: { ...arg },
+      }),
+      invalidatesTags: (_, __, arg) => [{ type: 'Users', id: arg.id }],
+    }),
+    deleteUser: builder.mutation<IDocumentDeleted, IUserDelete>({
+      query: ({ id }) => ({
+        url: '/notes',
+        method: 'DELETE',
+        body: { id },
+      }),
+      invalidatesTags: (_, __, arg) => [{ type: 'Users', id: arg.id }],
+    }),
   }),
 });
 
-export const { useGetUsersQuery } = usersApiSlice;
+export const {
+  useGetUsersQuery,
+  useAddNewUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = usersApiSlice;
 
 // returns the query result object
 export const selectUsersResult = usersApiSlice.endpoints.getUsers.select({});
