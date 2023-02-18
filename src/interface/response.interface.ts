@@ -18,4 +18,6 @@ export interface INotesResponse {
   text: string;
   title: string;
   completed: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }

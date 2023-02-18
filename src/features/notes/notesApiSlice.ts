@@ -7,7 +7,10 @@ import { apiSlice } from '../../app/api/apiSlice';
 import { RootState } from '../../app/store';
 import { INotesResponse } from '../../interface/response.interface';
 
-const notesAdapter = createEntityAdapter<INotesResponse>();
+const notesAdapter = createEntityAdapter<INotesResponse>({
+  sortComparer: (a, b) =>
+    a.completed === b.completed ? 0 : a.completed ? 1 : -1,
+});
 
 const initialState = notesAdapter.getInitialState();
 
