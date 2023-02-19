@@ -5,7 +5,15 @@ import {
 } from '@reduxjs/toolkit';
 import { apiSlice } from '../../app/api/apiSlice';
 import { RootState } from '../../app/store';
-import { INotesResponse } from '../../interface/response.interface';
+import {
+  INoteCreate,
+  INoteDeleted,
+  INoteUpdate,
+} from '../../interface/request.interface';
+import {
+  IDocumentDeleted,
+  INotesResponse,
+} from '../../interface/response.interface';
 
 const notesAdapter = createEntityAdapter<INotesResponse>({
   sortComparer: (a, b) =>
@@ -43,10 +51,39 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         return [{ type: 'Notes', id: 'LIST' }];
       },
     }),
+    addNewNote: builder.mutation<INotesResponse, INoteCreate>({
+      query: (arg) => ({
+        url: '/notes',
+        method: 'POST',
+        body: { ...arg },
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+    }),
+    updateNote: builder.mutation<INotesResponse, INoteUpdate>({
+      query: (arg) => ({
+        url: '/notes',
+        method: 'PATCH',
+        body: { ...arg },
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+    }),
+    deleteNote: builder.mutation<IDocumentDeleted, INoteDeleted>({
+      query: ({ id }) => ({
+        url: '/notes',
+        method: 'DELETE',
+        body: { id },
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+    }),
   }),
 });
 
-export const { useGetNotesQuery } = notesApiSlice;
+export const {
+  useGetNotesQuery,
+  useAddNewNoteMutation,
+  useUpdateNoteMutation,
+  useDeleteNoteMutation,
+} = notesApiSlice;
 
 export const selectNotesResult = notesApiSlice.endpoints.getNotes.select({});
 
