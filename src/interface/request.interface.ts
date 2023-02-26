@@ -1,6 +1,6 @@
 import { INotesResponse, IUsersResponse } from './response.interface';
 
-type Roles = 'Employee' | 'Admin' | 'Manager';
+export type Roles = 'Employee' | 'Admin' | 'Manager';
 
 export interface IUserCreate {
   username: string;
@@ -13,6 +13,7 @@ export interface IUserUpdate {
   username: string;
   password?: string;
   roles: Roles[];
+  active: boolean;
 }
 
 export interface IUserDelete {

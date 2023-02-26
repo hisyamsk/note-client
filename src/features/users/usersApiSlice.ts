@@ -29,7 +29,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           return response.status === 200;
         },
       }),
-      keepUnusedDataFor: 10,
       transformResponse: (responseData: IUsersResponse[]) => {
         const loadedUsers = responseData.map((user) => {
           user.id = user._id;
@@ -50,7 +49,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     addNewUser: builder.mutation<IUsersResponse, IUserCreate>({
       query: (arg) => ({
-        url: '/notes',
+        url: '/users',
         method: 'POST',
         body: { ...arg },
       }),
@@ -58,7 +57,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     updateUser: builder.mutation<IUsersResponse, IUserUpdate>({
       query: (arg) => ({
-        url: '/notes',
+        url: '/users',
         method: 'PATCH',
         body: { ...arg },
       }),
@@ -66,7 +65,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     deleteUser: builder.mutation<IDocumentDeleted, IUserDelete>({
       query: ({ id }) => ({
-        url: '/notes',
+        url: '/users',
         method: 'DELETE',
         body: { id },
       }),

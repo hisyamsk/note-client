@@ -1,7 +1,7 @@
 type Roles = 'Employee' | 'Admin' | 'Manager';
 
 export interface IUsersResponse {
-  id?: string;
+  id: string;
   _id: string;
   username: string;
   roles: Roles[];
@@ -9,7 +9,7 @@ export interface IUsersResponse {
 }
 
 export interface INotesResponse {
-  id?: string;
+  id: string;
   _id: string;
   user: {
     _id: IUsersResponse['_id'];
