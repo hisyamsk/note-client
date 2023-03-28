@@ -8,7 +8,11 @@ const UsersList = (): JSX.Element => {
     isSuccess,
     isError,
     error,
-  } = useGetUsersQuery({});
+  } = useGetUsersQuery(undefined, {
+    pollingInterval: 60 * 1000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
 
   let content: JSX.Element = <></>;
   if (isLoading) {
