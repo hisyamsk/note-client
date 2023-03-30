@@ -17,6 +17,7 @@ export interface INotesResponse {
   };
   text: string;
   title: string;
+  ticket: number;
   completed: boolean;
   createdAt: Date;
   updatedAt: Date;
