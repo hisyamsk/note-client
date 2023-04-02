@@ -27,3 +27,11 @@ export interface IDocumentDeleted {
   acknowledged: boolean;
   deletedCount: number;
 }
+
+export interface IAuthLoginReponse {
+  accessToken: string;
+}
+
+export interface IErrorResponse {
+  message: string;
+}

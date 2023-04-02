@@ -34,3 +34,8 @@ export interface INoteUpdate extends INoteCreate {
 export interface INoteDeleted {
   id: INotesResponse['id'];
 }
+
+export interface IAuthLoginRequest {
+  username: string;
+  password: string;
+}
