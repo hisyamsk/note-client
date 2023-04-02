@@ -1,3 +1,4 @@
+import { IErrorResponse } from '../../interface/response.interface';
 import User from './User';
 import { useGetUsersQuery } from './usersApiSlice';
 
@@ -21,12 +22,12 @@ const UsersList = (): JSX.Element => {
 
   if (isError && error) {
     if ('status' in error) {
-      const errMsg =
-        'error' in error ? error.error : JSON.stringify(error.data);
+      const errorData = error.data as IErrorResponse;
+      const errMsg = 'error' in error ? error.error : errorData.message;
 
       content = <p className="errmsg">{errMsg}</p>;
     } else {
-      content = <div>{error.message}</div>;
+      content = <p className="errmsg">{error.message}</p>;
     }
   }
 

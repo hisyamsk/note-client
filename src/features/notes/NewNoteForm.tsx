@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IUsersResponse } from '../../interface/response.interface';
+import {
+  IErrorResponse,
+  IUsersResponse,
+} from '../../interface/response.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAddNewNoteMutation } from './notesApiSlice';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
@@ -42,8 +45,8 @@ const NewNoteForm = ({ users }: { users: IUsersResponse[] }): JSX.Element => {
   const renderErrorMessage = () => {
     if (isError && error) {
       if ('status' in error) {
-        const errMsg =
-          'error' in error ? error.error : JSON.stringify(error.data);
+        const errorData = error.data as IErrorResponse;
+        const errMsg = 'error' in error ? error.error : errorData.message;
 
         return errMsg;
       } else {

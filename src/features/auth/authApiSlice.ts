@@ -2,6 +2,7 @@ import { apiSlice } from '../../app/api/apiSlice';
 import { IAuthLoginReponse } from '../../interface/response.interface';
 import { IAuthLoginRequest } from '../../interface/request.interface';
 import { logOut } from './authSlice';
+import { useAppDispatch } from '../../app/hooks';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -20,7 +21,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          dispatch(logOut);
+          dispatch(logOut());
           dispatch(apiSlice.util.resetApiState());
         } catch (err) {
           console.log(err);
