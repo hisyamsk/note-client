@@ -23,7 +23,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<EntityState<IUsersResponse>, any>({
       query: () => ({
-        url: '/users',
+        url: '/api/users',
         method: 'GET',
         validateStatus(response) {
           return response.status === 200;
@@ -49,7 +49,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     addNewUser: builder.mutation<IUsersResponse, IUserCreate>({
       query: (arg) => ({
-        url: '/users',
+        url: '/api/users',
         method: 'POST',
         body: { ...arg },
       }),
@@ -57,7 +57,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     updateUser: builder.mutation<IUsersResponse, IUserUpdate>({
       query: (arg) => ({
-        url: '/users',
+        url: '/api/users',
         method: 'PATCH',
         body: { ...arg },
       }),
@@ -65,7 +65,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     deleteUser: builder.mutation<IDocumentDeleted, IUserDelete>({
       query: ({ id }) => ({
-        url: '/users',
+        url: '/api/users',
         method: 'DELETE',
         body: { id },
       }),

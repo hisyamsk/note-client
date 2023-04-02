@@ -26,7 +26,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getNotes: builder.query<EntityState<INotesResponse>, any>({
       query: () => ({
-        url: '/notes',
+        url: '/api/notes',
         method: 'GET',
         validateStatus(response) {
           return response.status === 200;
@@ -52,7 +52,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
     }),
     addNewNote: builder.mutation<INotesResponse, INoteCreate>({
       query: (arg) => ({
-        url: '/notes',
+        url: '/api/notes',
         method: 'POST',
         body: { ...arg },
       }),
@@ -60,7 +60,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
     }),
     updateNote: builder.mutation<INotesResponse, INoteUpdate>({
       query: (arg) => ({
-        url: '/notes',
+        url: '/api/notes',
         method: 'PATCH',
         body: { ...arg },
       }),
@@ -68,7 +68,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
     }),
     deleteNote: builder.mutation<IDocumentDeleted, INoteDeleted>({
       query: ({ id }) => ({
-        url: '/notes',
+        url: '/api/notes',
         method: 'DELETE',
         body: { id },
       }),
