@@ -9,7 +9,14 @@ const NotesList = (): JSX.Element => {
     isSuccess,
     isError,
     error,
-  } = useGetNotesQuery({});
+  } = useGetNotesQuery(
+    {},
+    {
+      pollingInterval: 15 * 1000,
+      refetchOnFocus: true,
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   let content: JSX.Element = <></>;
   if (isLoading) {

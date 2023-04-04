@@ -1,8 +1,7 @@
 import { apiSlice } from '../../app/api/apiSlice';
 import { IAuthLoginReponse } from '../../interface/response.interface';
 import { IAuthLoginRequest } from '../../interface/request.interface';
-import { logOut } from './authSlice';
-import { useAppDispatch } from '../../app/hooks';
+import { logOut, setCredentials } from './authSlice';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -33,6 +32,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: '/auth/refresh',
         method: 'GET',
       }),
+      async onQueryStarted(_, api) {
+        try {
+          const { data } = await api.queryFulfilled;
+          const { accessToken } = data;
+          api.dispatch(setCredentials({ accessToken }));
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
   }),
 });

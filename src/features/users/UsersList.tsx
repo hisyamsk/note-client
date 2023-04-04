@@ -9,11 +9,14 @@ const UsersList = (): JSX.Element => {
     isSuccess,
     isError,
     error,
-  } = useGetUsersQuery(undefined, {
-    pollingInterval: 60 * 1000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-  });
+  } = useGetUsersQuery(
+    {},
+    {
+      pollingInterval: 60 * 1000,
+      refetchOnFocus: true,
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   let content: JSX.Element = <></>;
   if (isLoading) {
