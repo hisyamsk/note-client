@@ -45,7 +45,7 @@ const PersistLogin = (): JSX.Element => {
       return (
         <p className="errmsg">
           {erorrData.message}
-          <Link to="/login">Please Login again</Link>
+          <Link to="/login"> Please Login</Link>
         </p>
       );
     }

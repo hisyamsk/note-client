@@ -22,6 +22,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           await queryFulfilled;
           dispatch(logOut());
           dispatch(apiSlice.util.resetApiState());
+          localStorage.setItem('persist', 'false');
         } catch (err) {
           console.log(err);
         }
