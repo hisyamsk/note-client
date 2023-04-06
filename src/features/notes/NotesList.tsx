@@ -12,7 +12,7 @@ const NotesList = (): JSX.Element => {
   } = useGetNotesQuery(
     {},
     {
-      pollingInterval: 15 * 1000,
+      pollingInterval: 60 * 1000,
       refetchOnFocus: true,
       refetchOnMountOrArgChange: true,
     }

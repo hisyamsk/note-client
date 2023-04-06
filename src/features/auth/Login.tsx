@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, usePersist } from '../../app/hooks';
 import { setCredentials } from './authSlice';
 import { useLoginMutation } from './authApiSlice';
 import { IErrorResponse } from '../../interface/response.interface';
@@ -14,14 +14,15 @@ const Login = (): JSX.Element => {
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [persist, setPersist] = usePersist();
 
   const [login, { isLoading, error, isError }] = useLoginMutation();
 
   const onUsernameChanged = (e: React.FormEvent<HTMLInputElement>) =>
     setUsername(e.currentTarget.value);
-
   const onPasswordChanged = (e: React.FormEvent<HTMLInputElement>) =>
     setPassword(e.currentTarget.value);
+  const onToggleChaged = () => setPersist((prev) => !prev);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,6 +90,17 @@ const Login = (): JSX.Element => {
             required
           />
           <button className="form__submit-button">Sign In</button>
+
+          <label htmlFor="persist" className="form__persist">
+            <input
+              type="checkbox"
+              className="form__checkbox"
+              id="persist"
+              onChange={onToggleChaged}
+              checked={persist}
+            />
+            Remember me
+          </label>
         </form>
       </main>
       <footer>

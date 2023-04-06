@@ -33,7 +33,6 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         },
       }),
       transformResponse: (responseData: INotesResponse[]) => {
-        console.log(responseData, 'RESPONSE DATA');
         const loadedNotes = responseData.map((note) => {
           note.id = note._id;
           return note;
