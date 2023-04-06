@@ -99,7 +99,7 @@ const Login = (): JSX.Element => {
               onChange={onToggleChaged}
               checked={persist}
             />
-            Remember me
+            Perist Login
           </label>
         </form>
       </main>
