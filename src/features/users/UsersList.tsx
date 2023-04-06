@@ -37,9 +37,8 @@ const UsersList = (): JSX.Element => {
   if (isSuccess && users) {
     const { ids } = users;
 
-    const tableContent = ids.length
-      ? ids.map((id) => <User key={id} userId={id} />)
-      : null;
+    const tableContent =
+      ids.length && ids.map((id) => <User key={id} userId={id} />);
 
     content = (
       <table className="table table--users">

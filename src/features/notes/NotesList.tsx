@@ -1,3 +1,5 @@
+import { EntityId } from '@reduxjs/toolkit';
+import { useAuth } from '../../app/hooks';
 import { IErrorResponse } from '../../interface/response.interface';
 import Note from './Note';
 import { useGetNotesQuery } from './notesApiSlice';
@@ -18,6 +20,8 @@ const NotesList = (): JSX.Element => {
     }
   );
 
+  const { isAdmin, isManager, username } = useAuth();
+
   let content: JSX.Element = <></>;
   if (isLoading) {
     content = <p>Loading...</p>;
@@ -35,11 +39,19 @@ const NotesList = (): JSX.Element => {
   }
 
   if (isSuccess && notes) {
-    const { ids } = notes;
+    const { ids, entities } = notes;
 
-    const tableContent = ids.length
-      ? ids.map((id) => <Note key={id} noteId={id} />)
-      : null;
+    let filteredIds: EntityId[];
+    if (isManager || isAdmin) {
+      filteredIds = [...ids];
+    } else {
+      filteredIds = ids.filter(
+        (id) => entities[id]?.user.username === username
+      );
+    }
+
+    const tableContent =
+      ids.length && filteredIds.map((id) => <Note key={id} noteId={id} />);
 
     content = (
       <table className="table table--notes">
