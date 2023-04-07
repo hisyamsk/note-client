@@ -1,5 +1,6 @@
 import { EntityId } from '@reduxjs/toolkit';
 import { useAuth } from '../../app/hooks';
+import { NOTES_LIST } from '../../constants';
 import { IErrorResponse } from '../../interface/response.interface';
 import Note from './Note';
 import { useGetNotesQuery } from './notesApiSlice';
@@ -11,14 +12,11 @@ const NotesList = (): JSX.Element => {
     isSuccess,
     isError,
     error,
-  } = useGetNotesQuery(
-    {},
-    {
-      pollingInterval: 60 * 1000,
-      refetchOnFocus: true,
-      refetchOnMountOrArgChange: true,
-    }
-  );
+  } = useGetNotesQuery(NOTES_LIST, {
+    pollingInterval: 15 * 1000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
 
   const { isAdmin, isManager, username } = useAuth();
 

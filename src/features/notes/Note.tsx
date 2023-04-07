@@ -2,13 +2,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { EntityId } from '@reduxjs/toolkit';
-
-import { selectNoteById } from './notesApiSlice';
-import { useAppSelector } from '../../app/hooks';
+import { useGetNotesQuery } from './notesApiSlice';
+import { NOTES_LIST } from '../../constants';
+import { memo } from 'react';
 
 const Note = ({ noteId }: { noteId: EntityId }): JSX.Element | null => {
   const navigate = useNavigate();
-  const note = useAppSelector((state) => selectNoteById(state, noteId));
+
+  const { note } = useGetNotesQuery(NOTES_LIST, {
+    selectFromResult: ({ data }) => ({
+      note: data?.entities[noteId],
+    }),
+  });
 
   if (note) {
     const goToEditNotePage = () => navigate(`/dash/notes/${noteId}`);
@@ -50,4 +55,5 @@ const Note = ({ noteId }: { noteId: EntityId }): JSX.Element | null => {
   return null;
 };
 
-export default Note;
+const memoizedNote = memo(Note);
+export default memoizedNote;

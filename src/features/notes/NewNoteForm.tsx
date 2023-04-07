@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  IErrorResponse,
-  IUsersResponse,
-} from '../../interface/response.interface';
+import { IUsersResponse } from '../../interface/response.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAddNewNoteMutation } from './notesApiSlice';
 import { faSave } from '@fortawesome/free-solid-svg-icons';

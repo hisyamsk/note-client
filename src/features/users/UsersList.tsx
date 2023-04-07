@@ -1,3 +1,4 @@
+import { USERS_LIST } from '../../constants';
 import { IErrorResponse } from '../../interface/response.interface';
 import User from './User';
 import { useGetUsersQuery } from './usersApiSlice';
@@ -9,14 +10,11 @@ const UsersList = (): JSX.Element => {
     isSuccess,
     isError,
     error,
-  } = useGetUsersQuery(
-    {},
-    {
-      pollingInterval: 60 * 1000,
-      refetchOnFocus: true,
-      refetchOnMountOrArgChange: true,
-    }
-  );
+  } = useGetUsersQuery(USERS_LIST, {
+    pollingInterval: 15 * 1000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
 
   let content: JSX.Element = <></>;
   if (isLoading) {
