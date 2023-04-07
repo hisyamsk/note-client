@@ -12,6 +12,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../app/hooks';
 import { useSendLogoutMutation } from '../features/auth/authApiSlice';
 import { IErrorResponse } from '../interface/response.interface';
+import ErrorMessage from './ErrorMessage';
 
 const DASH_REGEX = /^\/dash(\/)?$/;
 const NOTES_REGEX = /^\/dash\/notes(\/)?$/;
@@ -29,20 +30,6 @@ const DashHeader = (): JSX.Element => {
   useEffect(() => {
     if (isSuccess) navigate('/');
   }, [isSuccess, navigate]);
-
-  const renderErrorMessage = () => {
-    if (isError && error) {
-      if ('status' in error) {
-        const errorData = error.data as IErrorResponse;
-        const errMsg = 'error' in error ? error.error : errorData.message;
-
-        return errMsg;
-      } else {
-        return error.message;
-      }
-    }
-    return '';
-  };
 
   const onNewNoteClicked = () => navigate('/dash/notes/new');
   const onNewUserClicked = () => navigate('/dash/users/new');
@@ -123,7 +110,7 @@ const DashHeader = (): JSX.Element => {
   }
 
   if (isError) {
-    return <p>{renderErrorMessage()}</p>;
+    return <ErrorMessage isError={isError} error={error} />;
   }
 
   let dashClass = '';

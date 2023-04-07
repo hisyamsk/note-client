@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAppDispatch, usePersist } from '../../app/hooks';
 import { setCredentials } from './authSlice';
 import { useLoginMutation } from './authApiSlice';
-import { IErrorResponse } from '../../interface/response.interface';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const Login = (): JSX.Element => {
   const errorRef = useRef<HTMLDivElement>(null);
@@ -38,20 +38,6 @@ const Login = (): JSX.Element => {
     }
   };
 
-  const renderErrorMessage = () => {
-    if (isError && error) {
-      if ('status' in error) {
-        const errorData = error.data as IErrorResponse;
-        const errMsg = 'error' in error ? error.error : errorData.message;
-
-        return errMsg;
-      } else {
-        return error.message;
-      }
-    }
-    return '';
-  };
-
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -64,7 +50,7 @@ const Login = (): JSX.Element => {
 
       <main className="login">
         <p ref={errorRef} className="errmsg" aria-live="assertive">
-          {renderErrorMessage()}
+          <ErrorMessage isError={isError} error={error} />
         </p>
 
         <form className="form" onSubmit={handleSubmit}>

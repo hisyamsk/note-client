@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { ROLES, USER_REGEX, PW_REGEX } from '../../constants';
 import { Roles } from '../../interface/request.interface';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const NewUserForm = (): JSX.Element => {
   const [addNewUser, { isLoading, isSuccess, isError, error }] =
@@ -49,7 +50,6 @@ const NewUserForm = (): JSX.Element => {
       validPassword,
       validPasswordConfirmation,
     ].every(Boolean) && !isLoading;
-  const errClass = isError ? 'errmsg' : 'offscreen';
   const validUserClass = !validUsername ? 'form__input--incomplete' : '';
   const validPwdClass = !validPassword ? 'form__input--incomplete' : '';
   const validPwdConfirmationClass =
@@ -96,23 +96,9 @@ const NewUserForm = (): JSX.Element => {
     ));
   };
 
-  const renderErrorMessage = () => {
-    if (isError && error) {
-      if ('status' in error) {
-        const errMsg =
-          'error' in error ? error.error : JSON.stringify(error.data);
-
-        return errMsg;
-      } else {
-        return error.message;
-      }
-    }
-    return '';
-  };
-
   return (
     <>
-      <p className={errClass}>{renderErrorMessage()}</p>
+      <ErrorMessage isError={isError} error={error} />
 
       <form className="form" onSubmit={onSaveClick}>
         <div className="form__title-row">

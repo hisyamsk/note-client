@@ -9,6 +9,7 @@ import {
 } from '../../interface/response.interface';
 import { useDeleteNoteMutation, useUpdateNoteMutation } from './notesApiSlice';
 import { useAuth } from '../../app/hooks';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const EditNoteForm = ({
   note,
@@ -81,29 +82,11 @@ const EditNoteForm = ({
 
   const renderErrorMessage = () => {
     if (isUpdateError && updateError) {
-      if ('status' in updateError) {
-        const errMsg =
-          'error' in updateError
-            ? updateError.error
-            : JSON.stringify(updateError.data);
-
-        return errMsg;
-      } else {
-        return updateError.message;
-      }
+      return <ErrorMessage isError={isUpdateError} error={updateError} />;
     }
 
     if (isDeleteError && deleteError) {
-      if ('status' in deleteError) {
-        const errMsg =
-          'error' in deleteError
-            ? deleteError.error
-            : JSON.stringify(deleteError.data);
-
-        return errMsg;
-      } else {
-        return deleteError.message;
-      }
+      return <ErrorMessage isError={isDeleteError} error={deleteError} />;
     }
     return '';
   };
@@ -135,7 +118,6 @@ const EditNoteForm = ({
   };
   const onCompletedChanged = () => setIsCompleted(!isCompleted);
 
-  const errClass = isUpdateError || isDeleteError ? 'errmsg' : 'offscreen';
   const validTitleClass = !title ? 'form__input--incomplete' : '';
   const validTextClass = !text ? 'form__input--incomplete' : '';
 
@@ -146,7 +128,7 @@ const EditNoteForm = ({
 
   return (
     <>
-      <p className={errClass}>{renderErrorMessage()}</p>
+      {renderErrorMessage()}
 
       <form className="form" onSubmit={(e) => e.preventDefault()}>
         <div className="form__title-row">

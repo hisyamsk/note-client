@@ -6,6 +6,7 @@ import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { ROLES, USER_REGEX, PW_REGEX } from '../../constants';
 import { IUsersResponse } from '../../interface/response.interface';
 import { Roles } from '../../interface/request.interface';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const EditUserForm = ({ user }: { user: IUsersResponse }): JSX.Element => {
   const navigate = useNavigate();
@@ -56,7 +57,6 @@ const EditUserForm = ({ user }: { user: IUsersResponse }): JSX.Element => {
       !isDeleteLoading;
   }
 
-  const errClass = isUpdateError || isDeleteError ? 'errmsg' : 'offscreen';
   const validUserClass = !validUsername ? 'form__input--incomplete' : '';
   const validPwdClass =
     password && !validPassword ? 'form__input--incomplete' : '';
@@ -124,29 +124,11 @@ const EditUserForm = ({ user }: { user: IUsersResponse }): JSX.Element => {
 
   const renderErrorMessage = () => {
     if (isUpdateError && updateError) {
-      if ('status' in updateError) {
-        const errMsg =
-          'error' in updateError
-            ? updateError.error
-            : JSON.stringify(updateError.data);
-
-        return errMsg;
-      } else {
-        return updateError.message;
-      }
+      return <ErrorMessage isError={isUpdateError} error={updateError} />;
     }
 
     if (isDeleteError && deleteError) {
-      if ('status' in deleteError) {
-        const errMsg =
-          'error' in deleteError
-            ? deleteError.error
-            : JSON.stringify(deleteError.data);
-
-        return errMsg;
-      } else {
-        return deleteError.message;
-      }
+      return <ErrorMessage isError={isDeleteError} error={deleteError} />;
     }
     return '';
   };
@@ -161,7 +143,7 @@ const EditUserForm = ({ user }: { user: IUsersResponse }): JSX.Element => {
 
   return (
     <>
-      <p className={errClass}>{renderErrorMessage()}</p>
+      {renderErrorMessage()}
 
       <form className="form">
         <div className="form__title-row">

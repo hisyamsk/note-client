@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAddNewNoteMutation } from './notesApiSlice';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const NewNoteForm = ({ users }: { users: IUsersResponse[] }): JSX.Element => {
   const navigate = useNavigate();
@@ -42,20 +43,6 @@ const NewNoteForm = ({ users }: { users: IUsersResponse[] }): JSX.Element => {
     }
   };
 
-  const renderErrorMessage = () => {
-    if (isError && error) {
-      if ('status' in error) {
-        const errorData = error.data as IErrorResponse;
-        const errMsg = 'error' in error ? error.error : errorData.message;
-
-        return errMsg;
-      } else {
-        return error.message;
-      }
-    }
-    return '';
-  };
-
   const renderOptions = () => {
     return users.map((user) => (
       <option key={user.id} value={user.id}>
@@ -64,13 +51,12 @@ const NewNoteForm = ({ users }: { users: IUsersResponse[] }): JSX.Element => {
     ));
   };
 
-  const errClass = isError ? 'errmsg' : 'offscreen';
   const validTitleClass = !title ? 'form__input--incomplete' : '';
   const validTextClass = !text ? 'form__input--incomplete' : '';
 
   return (
     <>
-      <p className={errClass}>{renderErrorMessage()}</p>
+      <ErrorMessage isError={isError} error={error} />
       <form className="form" onSubmit={onSaveNoteClicked}>
         <div className="form__title-row">
           <h2>New Note</h2>
